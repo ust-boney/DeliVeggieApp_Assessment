@@ -1,0 +1,6 @@
+@DeliVeggieApp.WebApi_HostAddress = http://localhost:5042
+
+GET {{DeliVeggieApp.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

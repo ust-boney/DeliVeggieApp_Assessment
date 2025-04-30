@@ -1,0 +1,69 @@
+############################
+# .NET Web API
+############################
+## Build Folders
+bin/
+obj/
+out/
+
+## User-specific files
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+
+## Logs
+*.log
+
+## ASP.NET temporary files
+**/App_Data/
+
+## Config transforms
+*.vspscc
+*.vssscc
+
+## Publish folder
+publish/
+
+## Rider and VS Code settings
+.idea/
+.vscode/
+
+############################
+# Angular Frontend
+############################
+node_modules/
+dist/
+out-tsc/
+.angular/
+coverage/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+## Environment files
+**/src/environments/*.ts
+!**/src/environments/environment.prod.ts
+
+############################
+# General
+############################
+.DS_Store
+Thumbs.db
+*.bak
+*.swp
+*~
+
+############################
+# Visual Studio
+############################
+.vs/
+*.dbmdl
+*.pdb
+
+############################
+# Optional: Docker
+############################
+docker-compose.override.yml
+*.env
+.env.*

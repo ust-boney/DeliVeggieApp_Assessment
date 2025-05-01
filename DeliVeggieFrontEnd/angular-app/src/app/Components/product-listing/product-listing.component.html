@@ -1,0 +1,20 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-sm-12">Product Listing</div>
+    </div>
+    <div class="row" *ngFor="let prod of productData">
+        <div class="col-lg-2">{{prod.itemId}}</div>
+        <div class="col-lg-6"><a class="btn-primary" routerLink='/product/{{prod.itemId}}'>{{prod.name}}</a></div>
+    </div>
+</div>
+
+<!-- <table class="bordered">
+    <tr>
+        <th>Product Listing</th>
+    </tr>
+    <tr *ngFor="let prod of productData">
+        <td>{{prod.itemId}} </td>
+        <td><a routerLink='/productdetails'>{{prod.name}}</a>  </td>
+    </tr>
+</table> -->

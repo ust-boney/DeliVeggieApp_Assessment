@@ -1,4 +1,13 @@
 services:
+  rabbitmq:
+    image: rabbitmq:3-management
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"  # management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: guest
+      RABBITMQ_DEFAULT_PASS: guest
   api-gateway:
     build: 
       context: ./DeliVeggieApp.APIGateway/DeliVeggieApp.APIGateway
@@ -11,12 +20,26 @@ services:
   dotnet-api:
     build: 
       context: ./DeliVeggieApp.WebApi/DeliVeggieApp.WebApi
+    depends_on:
+      - rabbitmq  
     ports:
       - "8081:8081" 
     networks:
       - my-network
     environment:
       - DOTNET_API_PORT=8081
+      - RabbitMq__HostName=rabbitmq
+  consoleapp:
+    build:
+      context: ./VeggieAppConsole/VeggieAppConsole
+    depends_on:
+      - rabbitmq  
+    ports:
+      - "8082:80"
+    networks:
+      - my-network
+    environment:
+      - RabbitMq__HostName=rabbitmq          
   angular-app:
     build:
       context: ./DeliVeggieFrontEnd/angular-app

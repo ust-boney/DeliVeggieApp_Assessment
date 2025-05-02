@@ -11,7 +11,8 @@ namespace VeggieAppConsole.MessageBroker
 {
     public class Subscriber :BackgroundService
     {
-        private readonly string _hostname = "localhost";
+        private readonly string _hostname = "rabbitmq";
+        private readonly int _port = 5672;
         private readonly string _queueName = "product-queue";
         private IProductService _productService;
         public Subscriber(IProductService productService)
@@ -20,7 +21,7 @@ namespace VeggieAppConsole.MessageBroker
         }
         public void ReceiveMessage()
         {
-            var factory = new ConnectionFactory() { HostName = _hostname };
+            var factory = new ConnectionFactory() { HostName = _hostname, Port=_port, UserName = "guest", Password = "guest" };
             var connection = factory.CreateConnection();
             var channel = connection.CreateModel();
 

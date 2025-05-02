@@ -5,15 +5,20 @@ namespace DeliVeggieApp.WebApi.MessageBroker
 {
     public class Publisher
     {
-        private readonly string _hostname = "localhost";
+
+        private readonly string _hostname = "rabbitmq";
+        private readonly int _port = 5672;
         private readonly string _queueName = "product-queue";
-       
+
 
         public void SendMessage(string message)
         {
             var factory = new ConnectionFactory()
             {
-                HostName = _hostname
+                HostName = _hostname,
+                Port = _port,
+                UserName = "guest",
+                Password = "guest"
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();

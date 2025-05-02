@@ -5,9 +5,9 @@ namespace VeggieAppConsole.MessageBroker
 {
     public class Publisher
     {
-        private readonly string _hostname = "localhost";
+        private readonly string _hostname = "rabbitmq";
+        private readonly int _port = 5672;
         private readonly string _queueName = "product-queue";
-        private readonly string _queueName2 = "productdetail-queue";
         //private readonly string _username = "guest";
         //private readonly string _password = "guest";
 
@@ -15,11 +15,14 @@ namespace VeggieAppConsole.MessageBroker
         {
             var factory = new ConnectionFactory()
             {
-                HostName = _hostname
+                HostName = _hostname,
+                Port = _port,
+                UserName = "guest",
+                Password = "guest"
             };
             using var connection = factory.CreateConnection();
             using var channel = connection.CreateModel();
-            channel.QueueDeclare(queue: _queueName2,
+            channel.QueueDeclare(queue: _queueName,
                              durable: true,
                              exclusive: false,
                              autoDelete: false,

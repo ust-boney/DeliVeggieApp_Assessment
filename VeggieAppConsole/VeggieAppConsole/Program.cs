@@ -26,16 +26,15 @@ internal class Program
                 services.AddScoped<IProductService, ProductService>();
             }).Build();
 
-        //var subscriber = new Subscriber();
-        //subscriber.ReceiveMessage();
-
-        using var scope = builder.Services.CreateScope();
-        var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
-        var products = productService.GetAll();
-        string jsonResult = JsonSerializer.Serialize(products);
-        var publisher = new Publisher();
-        publisher.SendMessage(jsonResult);
-        Console.ReadLine();
+ 
+        // publish message from Console app
+        //using var scope = builder.Services.CreateScope();
+        //var productService = scope.ServiceProvider.GetRequiredService<IProductService>();
+        //var products = productService.GetAll();
+        //string jsonResult = JsonSerializer.Serialize(products);
+        //var publisher = new Publisher();
+        //publisher.SendMessage(jsonResult);
+        //Console.ReadLine();
 
 
 

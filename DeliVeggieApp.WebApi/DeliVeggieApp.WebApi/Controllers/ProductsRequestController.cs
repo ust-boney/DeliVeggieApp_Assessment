@@ -34,12 +34,14 @@ namespace DeliVeggieApp.WebApi.Controllers
            
         }
 
+
         // GET api/<ProductsRequestController>/5
         [HttpGet("GetProductDetails/{id}")]
         public Product GetProductDetails(int id)
         {
             try
             {
+                publisher.SendMessage($"GetProductDetails/{id}");
                 Product product = _productService.GetById(id);
                 product.Price = CalculatPriceDiscount(product.Price);
                 return product;

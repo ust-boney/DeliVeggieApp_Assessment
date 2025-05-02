@@ -11,13 +11,19 @@ services:
   dotnet-api:
     build: 
       context: ./DeliVeggieApp.WebApi/DeliVeggieApp.WebApi
-    image: veggieapp.webapi
     ports:
       - "8081:8081" 
     networks:
       - my-network
     environment:
       - DOTNET_API_PORT=8081
+  angular-app:
+    build:
+      context: ./DeliVeggieFrontEnd/angular-app
+    ports:
+      - "5000:80"
+    networks:
+      - my-network  
 networks:
   my-network:
     driver: bridge

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace DeliVeggieApp.WebApi.MessageBroker
 {
-    public class Subscriber
+    public class Subscriber : BackgroundService
     {
         private readonly string _hostname = "localhost";
         private readonly string _queueName = "product-queue";
@@ -41,6 +41,12 @@ namespace DeliVeggieApp.WebApi.MessageBroker
 
             Console.WriteLine(" [*] Waiting for messages. Press [enter] to exit.");
             Console.ReadLine();
+        }
+
+        protected override Task ExecuteAsync(CancellationToken stoppingToken)
+        {
+           ReceiveMessage();
+            return Task.CompletedTask;
         }
     }
 }

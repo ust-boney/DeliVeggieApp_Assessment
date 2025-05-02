@@ -7,8 +7,7 @@ namespace DeliVeggieApp.WebApi.MessageBroker
     {
         private readonly string _hostname = "localhost";
         private readonly string _queueName = "product-queue";
-        //private readonly string _username = "guest";
-        //private readonly string _password = "guest";
+       
 
         public void SendMessage(string message)
         {

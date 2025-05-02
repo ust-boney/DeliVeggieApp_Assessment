@@ -7,7 +7,7 @@ import { Observable, tap } from 'rxjs';
 })
 export class ProductService {
   private _http:HttpClient;
-  private productGatewayUrl="http://localhost:5264";
+  private productGatewayUrl="http://localhost:7002";
   constructor(httpRef: HttpClient) { 
     this._http= httpRef;
   }

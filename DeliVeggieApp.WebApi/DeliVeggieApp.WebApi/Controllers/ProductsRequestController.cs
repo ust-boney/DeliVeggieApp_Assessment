@@ -1,4 +1,5 @@
-﻿using DeliVeggieApp.WebApi.Models;
+﻿using DeliVeggieApp.WebApi.MessageBroker;
+using DeliVeggieApp.WebApi.Models;
 using DeliVeggieApp.WebApi.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,10 +12,11 @@ namespace DeliVeggieApp.WebApi.Controllers
     public class ProductsRequestController : ControllerBase
     {
         private readonly IProductService _productService;
-
+        private Publisher publisher;
         public ProductsRequestController(IProductService productService)
         {
             _productService = productService;
+            publisher = new Publisher();
         }
         // GET: api/<ProductsRequestController>
         [HttpGet("GetProductList")]
@@ -22,6 +24,7 @@ namespace DeliVeggieApp.WebApi.Controllers
         {
             try
             {
+                publisher.SendMessage("GetProductList");
                 return _productService.GetAll();
             }
             catch

@@ -11,16 +11,29 @@ namespace DeliVeggieApp.WebApi.MessageBroker
         private readonly string _queueName = "product-queue";
 
 
+// public static IConnection TryConnectWithRetry(ConnectionFactory factory, 
+// int maxRetries = 10, int delayMilliseconds = 2000)
+// {
+//     for (int i = 0; i < maxRetries; i++)
+//     {
+//         try
+//         {
+//             return factory.CreateConnection();
+//         }
+//         catch (BrokerUnreachableException)
+//         {
+//             Console.WriteLine($"[Retry {i + 1}] RabbitMQ not ready. Waiting...");
+//             Thread.Sleep(delayMilliseconds);
+//         }
+//     }
+
+//     throw new Exception("Failed to connect to RabbitMQ after multiple retries.");
+// }
+
         public void SendMessage(string message)
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = _hostname,
-                Port = _port,
-                UserName = "guest",
-                Password = "guest"
-            };
-            using var connection = factory.CreateConnection();
+           
+           using var connection = Common.TryConnectWithRetry();
             using var channel = connection.CreateModel();
             channel.QueueDeclare(queue: _queueName,
                              durable: true,

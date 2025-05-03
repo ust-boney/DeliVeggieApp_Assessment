@@ -9,11 +9,16 @@ namespace DeliVeggieApp.WebApi.MessageBroker
         private readonly string _hostname = "rabbitmq";
         private readonly int _port = 5672;
         private readonly string _queueName = "product-queue";
-      
+
         public void ReceiveMessage()
         {
-            var factory = new ConnectionFactory() { HostName = _hostname };
-            var connection = factory.CreateConnection();
+            // var factory = new ConnectionFactory()
+            // {
+            //     HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST"),
+            //     UserName = Environment.GetEnvironmentVariable("RABBITMQ_USER"),
+            //     Password = Environment.GetEnvironmentVariable("RABBITMQ_PASS")
+            // };
+            using var connection = Common.TryConnectWithRetry();
             var channel = connection.CreateModel();
             channel.QueueDeclare(queue: _queueName,
                                  durable: true,
@@ -29,7 +34,7 @@ namespace DeliVeggieApp.WebApi.MessageBroker
                 var message = Encoding.UTF8.GetString(body);
                 Console.WriteLine($"[x] Received: {message}");
 
-                
+
             };
 
             channel.BasicConsume(queue: _queueName,
@@ -42,8 +47,8 @@ namespace DeliVeggieApp.WebApi.MessageBroker
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
         {
-           ReceiveMessage();
-           return Task.CompletedTask;
+            ReceiveMessage();
+            return Task.CompletedTask;
         }
     }
 }

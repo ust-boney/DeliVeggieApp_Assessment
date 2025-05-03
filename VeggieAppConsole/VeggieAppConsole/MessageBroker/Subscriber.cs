@@ -9,7 +9,7 @@ using VeggieAppConsole.Models;
 
 namespace VeggieAppConsole.MessageBroker
 {
-    public class Subscriber :BackgroundService
+    public class Subscriber : BackgroundService
     {
         private readonly string _hostname = "rabbitmq";
         private readonly int _port = 5672;
@@ -21,8 +21,7 @@ namespace VeggieAppConsole.MessageBroker
         }
         public void ReceiveMessage()
         {
-            var factory = new ConnectionFactory() { HostName = _hostname, Port=_port, UserName = "guest", Password = "guest" };
-            var connection = factory.CreateConnection();
+           using var connection = Common.TryConnectWithRetry();
             var channel = connection.CreateModel();
 
             channel.QueueDeclare(queue: _queueName,
@@ -47,7 +46,7 @@ namespace VeggieAppConsole.MessageBroker
                            consumer: consumer);
 
             Console.WriteLine(" [*] Waiting for messages. Press [enter] to exit.");
-           
+
         }
 
         protected override Task ExecuteAsync(CancellationToken stoppingToken)
@@ -58,18 +57,18 @@ namespace VeggieAppConsole.MessageBroker
 
         private void PublishMessage(string serviceName)
         {
-            string jsonResult =string.Empty;
+            string jsonResult = string.Empty;
             if (serviceName == "GetProductList")
             {
-               var products= _productService.GetAll();
+                var products = _productService.GetAll();
                 jsonResult = JsonSerializer.Serialize(products);
             }
             else if (serviceName.Contains("GetProductDetails"))
             {
                 int parameterId = 0;
-                int.TryParse(serviceName.Split('/')[1], out  parameterId);
+                int.TryParse(serviceName.Split('/')[1], out parameterId);
                 var product = _productService.GetById(parameterId);
-                 jsonResult = JsonSerializer.Serialize(product);
+                jsonResult = JsonSerializer.Serialize(product);
             }
             var publisher = new Publisher();
             publisher.SendMessage(jsonResult);

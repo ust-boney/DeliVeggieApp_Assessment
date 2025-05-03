@@ -8,19 +8,10 @@ namespace VeggieAppConsole.MessageBroker
         private readonly string _hostname = "rabbitmq";
         private readonly int _port = 5672;
         private readonly string _queueName = "product-queue";
-        //private readonly string _username = "guest";
-        //private readonly string _password = "guest";
 
         public void SendMessage(string message)
         {
-            var factory = new ConnectionFactory()
-            {
-                HostName = _hostname,
-                Port = _port,
-                UserName = "guest",
-                Password = "guest"
-            };
-            using var connection = factory.CreateConnection();
+            using var connection = Common.TryConnectWithRetry();
             using var channel = connection.CreateModel();
             channel.QueueDeclare(queue: _queueName,
                              durable: true,

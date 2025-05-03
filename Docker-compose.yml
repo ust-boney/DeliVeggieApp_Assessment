@@ -1,10 +1,12 @@
 services:
   rabbitmq:
     image: rabbitmq:3-management
-    hostname: rabbitmq
+    container_name: rabbitmq
     ports:
-      - "5672:5672"
+      - "5672:5672"    # AMQP
       - "15672:15672"  # management UI
+    networks:
+      - my-network  
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
@@ -28,21 +30,25 @@ services:
       - my-network
     environment:
       - DOTNET_API_PORT=8081
-      - RabbitMq__HostName=rabbitmq
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest
   consoleapp:
     build:
       context: ./VeggieAppConsole/VeggieAppConsole
     depends_on:
       - rabbitmq  
     ports:
-      - "8082:80"
+      - "8082:8082"
     networks:
       - my-network
     environment:
-      - RabbitMq__HostName=rabbitmq          
+      - RABBITMQ_HOST=rabbitmq
+      - RABBITMQ_USER=guest
+      - RABBITMQ_PASS=guest          
   angular-app:
     build:
-      context: ./DeliVeggieFrontEnd/angular-app
+      context: ./DeliVeggieFrontEnd
     ports:
       - "5000:80"
     networks:

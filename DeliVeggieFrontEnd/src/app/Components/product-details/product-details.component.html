@@ -1,6 +1,29 @@
+<div class="container">
+<div class="row">
+    <div class="col-lg-6 col-sm-12">
+        <h2 class="title">Product Details</h2>
+    </div>
+    <div class="col-lg-6">
+        <button class="btn-primary mt-5" routerLink='/products'>Back to Home</button>
+     
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-3">Id</div>
+    <div class="col-lg-3">: {{product.itemId}}</div>
+</div>
 
-<h2>Product Details</h2>
-<p>Id: {{product.itemId}} </p>
-<p>Name: {{product.name}} </p>
-<p>Entry Date: {{product.entityDate}} </p>
-<p>Price for today(incl. reduction): {{product.price|currency:"EUR":"symbol"}} </p>
+<div class="row">
+    <div class="col-lg-3">Name</div>
+    <div class="col-lg-3">: {{product.name}}</div>
+</div>
+<div class="row">
+    <div class="col-lg-3">Entry Date</div>
+    <div class="col-lg-3">: {{product.entityDate}}</div>
+</div>
+<div class="row">
+    <div class="col-lg-3">Price for today(incl. reduction)</div>
+    <div class="col-lg-3">: {{product.price|currency:"EUR":"symbol"}}</div>
+</div>
+
+</div>

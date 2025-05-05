@@ -12,10 +12,6 @@ namespace VeggieAppConsole.MessageBroker
                 HostName = Environment.GetEnvironmentVariable("RABBITMQ_HOST"),
                 UserName = Environment.GetEnvironmentVariable("RABBITMQ_USER"),
                 Password = Environment.GetEnvironmentVariable("RABBITMQ_PASS")
-                // HostName = _hostname,
-                // Port = _port,
-                // UserName = "guest",
-                // Password = "guest"
             };
 
             for (int i = 0; i < maxRetries; i++)

@@ -24,6 +24,7 @@ internal class Program
                 services.AddSingleton<IMongoClient>(s =>
                  new MongoClient(context.Configuration.GetValue<string>("ProductStoreSettings:ConnectionString")));
                 services.AddScoped<IProductService, ProductService>();
+                services.AddHostedService<Subscriber>();
             }).Build();
 
  

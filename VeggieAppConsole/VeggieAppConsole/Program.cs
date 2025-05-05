@@ -11,9 +11,9 @@ using System.Text.Json;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
-        var builder = Host.CreateDefaultBuilder(args)
+        var host = Host.CreateDefaultBuilder(args)
            .ConfigureAppConfiguration((context, config) =>
            {
                config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
@@ -27,6 +27,7 @@ internal class Program
                 services.AddHostedService<Subscriber>();
             }).Build();
 
+ await host.RunAsync();
  
         // publish message from Console app
         //using var scope = builder.Services.CreateScope();
